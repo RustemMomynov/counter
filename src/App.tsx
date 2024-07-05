@@ -1,13 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
-import Counter from "./components/Counter";
+import CountrolledCounter from "./components/ControlledCounter";
 
 function App() {
-  const [counter, setCounter] = useState(0);
+  const [startValue, setStartValue] = useState(0);
+  const [maxValue, setMaxValue] = useState(5);
+  const [counter, setCounter] = useState(startValue);
+
+  useEffect(() => {
+    setCounter(startValue);
+  }, [startValue]);
 
   return (
     <div className="App">
-      <Counter counter={counter} setCounter={setCounter} />
+      <CountrolledCounter
+        counter={counter}
+        startValue={startValue}
+        maxValue={maxValue}
+        setStartValue={setStartValue}
+        setMaxValue={setMaxValue}
+        setCounter={setCounter}
+      />
     </div>
   );
 }

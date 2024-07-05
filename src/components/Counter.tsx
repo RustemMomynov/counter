@@ -1,31 +1,28 @@
-import { FC, useRef } from "react";
-import Button from "../button/Button";
 import { Line } from "rc-progress";
+import { FC } from "react";
+import Button from "../button/Button";
 
 interface CounterProps {
   counter: number;
+  maxValue: number;
   setCounter: (count: number) => void;
 }
 
 const Counter: FC<CounterProps> = (props) => {
-  const maxCounterValue = useRef(5);
-
   const addCountHandler = () => {
-    const newCounter = props.counter + 1;
-    props.setCounter(newCounter);
+    props.setCounter(props.counter + 1);
   };
 
   const resetCounterHandler = () => {
     props.setCounter(0);
-    maxCounterValue.current = Math.floor(Math.random() * 101);
   };
 
-  const percentForProgressBar = (props.counter / maxCounterValue.current) * 100;
+  const percentForProgressBar = (props.counter / props.maxValue) * 100;
 
   return (
     <div className="counter">
-      <h3>Max value {maxCounterValue.current}</h3>
-      <h2 className={props.counter >= maxCounterValue.current ? "red" : ""}>
+      <h3>Max value {props.maxValue}</h3>
+      <h2 className={props.counter >= props.maxValue ? "red" : ""}>
         {props.counter}
       </h2>
       <Line
@@ -37,7 +34,7 @@ const Counter: FC<CounterProps> = (props) => {
       />
       <div>
         <Button
-          disabled={props.counter >= maxCounterValue.current}
+          disabled={props.counter >= props.maxValue}
           title="Inc"
           onClickHandler={addCountHandler}
         />
